@@ -51,7 +51,7 @@ yum -y install perl
 Let's make a VM snapshot of the image now in case we need any other iterations.  Shutdown the server and make a VM snapshot from the vCenter console.
 
 Next we will install cloud-init
-'''
+```
 # yum -y install cloud-init
 ```
 
@@ -62,6 +62,58 @@ network:
   config: disabled
 EOF
 ```
+We setup cloud-init to call backk to Satellite
+```
+# cat << EOF > /etc/cloud/cloud.cfg.d/10_foreman.cfg
+datasource_list: [NoCloud]
+datasource:
+  NoCloud:
+    seedfrom: http://sat01.example.com/userdata/
+EOF
+```
+
+Make up a backup of the default cloud-init and relace the default cloud-init
+```
+# cp /etc/cloud/cloud.cfg ~/cloud.cfg.`date -I`
+# cat << EOF > /etc/cloud/cloud.cfg
+cloud_init_modules:
+ - bootcmd
+
+cloud_config_modules:
+ - runcmd
+
+cloud_final_modules:
+ - scripts-per-once
+ - scripts-per-boot
+ - scripts-per-instance
+ - scripts-user
+ - phone-home
+
+system_info:
+  distro: rhel
+  paths:
+    cloud_dir: /var/lib/cloud
+    templates_dir: /etc/cloud/templates
+  ssh_svcname: sshd
+
+# vim:syntax=yaml
+EOF
+```
+We will now unregister the server from Satellite
+```
+# subscription-manager unregister
+Unregistering from: satellite.example.com:443/rhsm
+System has been unregistered.
+# subscription-manager clean
+All local data removed
+```
+
+
+
+
+
+
+
 
 ### Satellite side...
 
