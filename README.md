@@ -220,11 +220,43 @@ nicSettingMap:
 EOF
 ```
 
-Now we will install our newly create teamplates.
+From Hammer, let's get the ids for the operating system, architecture, and compute resources.
+```
+$ hammer os list; hammer architecture list; hammer compute-resource list
+---|------------|--------------|-------
+ID | TITLE      | RELEASE NAME | FAMILY
+---|------------|--------------|-------
+1  | RedHat 7.9 |              | Redhat
+2  | RedHat 8.3 |              | Redhat
+---|------------|--------------|-------
+---|-------
+ID | NAME  
+---|-------
+1  | x86_64
+2  | i386  
+---|-------
+---|------------|---------
+ID | NAME       | PROVIDER
+---|------------|---------
+4  | cr-vcenter | VMware  
+---|------------|---------
+```
+
+Now we will install our cloud-init and vmware-userdata-template templates
 
 ```
-# hammer template create --name vmware-cloud-init --file ~/vmware-cloud-init-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 1 --type cloud-init
+# hammer template create --name vmware-cloud-init --file ~/vmware-cloud-init-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type cloud-init
+Provisioning template created.
+# hammer template create --name vmware-userdata --file ~/vmware-userdata-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type user_data
+Provisioning template created.
 ```
+Creat image in Satellite link the vCenter template
+```
+# hammer compute-resource image create --operatingsystem-id 2 --architecture-id 1 --compute-resource-id 4 --user-data true --uuid template-rhel8-cloudinit --username root --name img-rhel8-prem-server
+Image created.
+```
+
+
 
 ## References  
 [Installing Satellite Server from a Connected Network](https://access.redhat.com/documentation/en-us/red_hat_satellite/6.9/html/installing_satellite_server_from_a_connected_network/index)   
