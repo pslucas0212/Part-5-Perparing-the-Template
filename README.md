@@ -8,7 +8,7 @@ We will start our work on the VMWare side.
 
 ### Create VM Template on VMWare
 
-We will now create VM template on VMware.  We will create a RHEL 8.3 teamplate to have some practice later updating the RHEL VM. 
+We will now create VM template on VMware.  We will create a RHEL 8.3 teamplate to have some practice later updating the RHEL VM. Note: The following instruction steps come from the Template section of [What user permissions/roles are required for the VMware vCenter user account to provision from Satellite 6.x?](https://access.redhat.com/solutions/1339483) Red Hat Knowledge Center.  See this article for more details.
 
 First you will need to upload any RHEL ISO files to the VMware environment you will need for the RHEL VM we will be creating.  
 
