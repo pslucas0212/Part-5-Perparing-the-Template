@@ -30,9 +30,26 @@ nmcli> save
 nmcli> quit
 [root@localhost ~]# nmcli device reapply ens192
 [root@localhost ~]# nmcli device show ens192
-
-
+[root@localhost ~]# hostnamectl set-hostname "localhost.localdomain"
 ```
+We will now need to temporarily subscribe to Satellite to access template packages.  Note: Here for --org parameter we use the Operations Department label.
+```
+# rpm -ivh http://sat01.example.com/pub/katello-ca-consumer-latest.noarch.rpm
+# subscription-manager register --org=operations --activationkey=ak-ops-rhel8-prem-server 
+```
+
+Next we will install open-vm-tools
+```
+yum -y install open-vm-tools.x86_64
+```
+
+Install Perl
+```
+yum -y install perl
+```
+
+Let's make a VM snapshot of the image now in case we need any other iterations.  Shutdown the server and make a VM snapshot from the vCenter console.
+
 
 ### Satellite side...
 
