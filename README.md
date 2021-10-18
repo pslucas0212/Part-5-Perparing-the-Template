@@ -108,12 +108,62 @@ System has been unregistered.
 All local data removed
 ```
 
+We will creat a clean up script.
+```
+cat > ~/clean.sh <<EOF
+#!/bin/bash
 
+# stop logging services
+/usr/bin/systemctl stop rsyslog
+/usr/bin/systemctl stop auditd
 
+# remove old kernels
+# /bin/package-cleanup -oldkernels -count=1
 
+#clean yum cache
+/usr/bin/yum clean all
 
+#force logrotate to shrink logspace and remove old logs as well as truncate logs
+/usr/sbin/logrotate -f /etc/logrotate.conf
+/bin/rm -f /var/log/*-???????? /var/log/*.gz
+/bin/rm -f /var/log/dmesg.old
+/bin/rm -rf /var/log/anaconda
+/bin/cat /dev/null > /var/log/audit/audit.log
+/bin/cat /dev/null > /var/log/wtmp
+/bin/cat /dev/null > /var/log/lastlog
+/bin/cat /dev/null > /var/log/grubby
 
+#remove udev hardware rules
+/bin/rm -f /etc/udev/rules.d/70*
 
+#remove uuid from ifcfg scripts
+/bin/cat > /etc/sysconfig/network-scripts/ifcfg-ens192 <<EOM
+DEVICE=ens192
+ONBOOT=yes
+EOM
+
+#remove SSH host keys
+/bin/rm -f /etc/ssh/*key*
+
+#remove root users shell history
+/bin/rm -f ~root/.bash_history
+unset HISTFILE
+
+#remove root users SSH history
+/bin/rm -rf ~root/.ssh/known_hosts
+EOF
+```
+
+Run the clean script.
+```
+sh ~/clean.sh
+```
+
+Finally we will power off the system to make the VMWare template
+```
+# systemctl poweroff
+```
+No we will return the the vCenter console to finish create the VMware virtual machine template.
 
 ### Satellite side...
 
