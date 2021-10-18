@@ -50,6 +50,18 @@ yum -y install perl
 
 Let's make a VM snapshot of the image now in case we need any other iterations.  Shutdown the server and make a VM snapshot from the vCenter console.
 
+Next we will install cloud-init
+'''
+# yum -y install cloud-init
+```
+
+Configure cloud-init to skip networking
+```
+# cat << EOF > /etc/cloud/cloud.cfg.d/01_network.cfg
+network:
+  config: disabled
+EOF
+```
 
 ### Satellite side...
 
