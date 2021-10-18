@@ -165,7 +165,7 @@ Finally we will power off the system to make the VMWare template
 ```
 # systemctl poweroff
 ```
-No we will return the the vCenter console to finish create the VMware virtual machine template.
+No we will return the the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
 
 ### Satellite side...
 
