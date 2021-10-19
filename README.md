@@ -256,7 +256,7 @@ Creat image in Satellite link the vCenter template
 Image created.
 ```
 
-I would also recommend checking to see if VM we created for out template has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
+I would also recommend checking to see if the VM we created for out template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
 
 ![Hosts -> All Hosts](/images/sat49.png/)
 
