@@ -256,7 +256,15 @@ Creat image in Satellite link the vCenter template
 Image created.
 ```
 
+I would also recommend checking to see if VM we created for out template has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
 
+![Hosts -> All Hosts](/image/sat49.png/)
+
+Click on Edit drop down button in the far right column for the localhost.localdomain host, and chose Delete.  
+
+![Delete button](/image/sat50.png)
+
+In the dialog box that says " Are you sure you want to delete host localhost.localdomain? This action is irreversible.", click the OK button.
 
 ## References  
 [Installing Satellite Server from a Connected Network](https://access.redhat.com/documentation/en-us/red_hat_satellite/6.9/html/installing_satellite_server_from_a_connected_network/index)   
