@@ -1,4 +1,4 @@
-# Part 5: Perparing the VMWare VM Template
+# Part 5: Preparing the VMWare VM Template
 
 [Tutorial Menu](https://github.com/pslucas0212/RedHat-Satellite-VM-Provisioning-to-vSphere-Tutorial)    
 
@@ -258,11 +258,11 @@ Image created.
 
 I would also recommend checking to see if VM we created for out template has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
 
-![Hosts -> All Hosts](/image/sat49.png/)
+![Hosts -> All Hosts](/images/sat49.png/)
 
 Click on Edit drop down button in the far right column for the localhost.localdomain host, and chose Delete.  
 
-![Delete button](/image/sat50.png)
+![Delete button](/images/sat50.png)
 
 In the dialog box that says " Are you sure you want to delete host localhost.localdomain? This action is irreversible.", click the OK button.
 
