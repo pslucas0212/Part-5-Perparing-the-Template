@@ -1,4 +1,4 @@
-# Part 5: Perparing the Template
+# Part 5: Perparing the VMWare VM Template
 
 [Tutorial Menu](https://github.com/pslucas0212/RedHat-Satellite-VM-Provisioning-to-vSphere-Tutorial)    
 
