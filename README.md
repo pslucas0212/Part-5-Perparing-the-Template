@@ -34,27 +34,31 @@ nmcli> quit
 [root@localhost ~]# nmcli device show ens192
 [root@localhost ~]# hostnamectl set-hostname "localhost.localdomain"
 ```
-We will now need to temporarily subscribe to Satellite to access template packages.  Note: Here for --org parameter we use the Operations Department label.
+
+We will now need to temporarily subscribe to Satellite to access template packages. Note: Here for --org parameter we use the Operations Department label.
 ```
 # rpm -ivh http://sat01.example.com/pub/katello-ca-consumer-latest.noarch.rpm
 # subscription-manager register --org=operations --activationkey=ak-ops-rhel8-prem-server 
 ```
 
-Next we will install open-vm-tools
+To support the creation of the VM teamplate, we willInstall the followeing the cloud-init, open-vm-tools and perl packages.
 ```
-yum -y install open-vm-tools.x86_64
-```
-
-Install Perl
-```
-yum -y install perl
+# yum -y install cloud-init open-vm-tools perl
 ```
 
-Let's make a VM snapshot of the image now in case we need any other iterations.  Shutdown the server and make a VM snapshot from the vCenter console.
-
-Next we will install cloud-init
+Enable the CA certificates for the image:
 ```
-# yum -y install cloud-init
+# update-ca-trust enable 
+```
+
+Download the katello-server-ca.crt file from Satellite Server:
+```
+# wget -O /etc/pki/ca-trust/source/anchors/cloud-init-ca.crt http://sat01.example.com/pub/katello-server-ca.crt
+```
+
+To update the record of certificates, enter the following command:
+```
+# update-ca-trust extract
 ```
 
 Configure cloud-init to skip networking
@@ -63,7 +67,8 @@ Configure cloud-init to skip networking
 network:
   config: disabled
 EOF
-```
+```  
+
 We setup cloud-init to call backk to Satellite
 ```
 # cat << EOF > /etc/cloud/cloud.cfg.d/10_foreman.cfg
@@ -101,23 +106,23 @@ system_info:
 # vim:syntax=yaml
 EOF
 ```
+
 We will now unregister the server from Satellite
 ```
 # subscription-manager unregister
-Unregistering from: satellite.example.com:443/rhsm
+Unregistering from: sat01.example.com:443/rhsm
 System has been unregistered.
 # subscription-manager clean
 All local data removed
 ```
-
 We will creat a clean up script.
 ```
-cat > ~/clean.sh <<EOF
+# cat > ~/clean.sh <<EOF
 #!/bin/bash
 
 # stop logging services
 /usr/bin/systemctl stop rsyslog
-/usr/bin/systemctl stop auditd
+/usr/bin/service stop auditd
 
 # remove old kernels
 # /bin/package-cleanup -oldkernels -count=1
