@@ -199,10 +199,6 @@ tries: 10
 EOF
 ```
 
-For the user data we can use the UserData open-vm-tools template that is provided with Satellite.
-
-
-
 
 From Hammer, let's get the ids for the operating system, architecture, and compute resources.
 ```
@@ -232,6 +228,14 @@ Now we will create our cloud-init template on Satellite
 # hammer template create --name vmware-cloud-init --file ~/vmware-cloud-init-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type cloud-init
 Provisioning template created.
 ```
+For the user data we can use the UserData open-vm-tools template that is provided with Satellite.  We will need to associate the UserData open-vm-tools template with RHEL 8.3.  Chose Hosts -> Provisioning Templates from the left naviagtion bar.
+
+![Hosts -> Provisioning Templates](/images/sat64.png)
+
+On the Provisioning Templates page, type 'userdata' in the search field and the click Search button.  On the resulting list, click on the UserData open-vm-tools link.
+
+![Filter on userdata and click UserData open-vm-tools link](/images/sat65.png)
+
 Creat an image in Satellite link the vCenter template
 ```
 # hammer compute-resource image create --operatingsystem-id 2 --architecture-id 1 --compute-resource-id 4 --user-data true --uuid template-rhel8-cloudinit --username root --name img-rhel8-prem-server
