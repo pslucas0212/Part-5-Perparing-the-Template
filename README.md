@@ -8,9 +8,9 @@ We will start our work on the VMWare side.
 
 ### Create VM Template on VMWare
 
-We will now create VM template on VMware.  We will create a RHEL 8.3 teamplate to have some practice later updating the RHEL VM. Note: The following instruction steps come from the Template section of [What user permissions/roles are required for the VMware vCenter user account to provision from Satellite 6.x?](https://access.redhat.com/solutions/1339483) Red Hat Knowledge Center.  See this article for more details.
+We will now create VM template on VMware.  We will create a RHEL 8.3 teamplate to have some practice later updating the RHEL VM. 
 
-First you will need to upload any RHEL ISO files to the VMware environment you will need for the RHEL VM we will be creating.  
+First you will need to upload any RHEL ISO files to the VMware environment you will need for the RHEL VM we will be creating.  For RHEL 8.3 I uploaded the rhel-8.3-x86_64-dvd.iso file.
 
 Create and start the RHEL VM.  Chose 1 CPU with 2 GB of RAM and 20GB disk space.  You will use the web console to interact with the VM and configure it.  You will need to set the language, define the disk and set the root password.  Start the installation and reboot the system per the installation instruction.  After the system has rebooted, login as root and start a terminal session for the remainder of the configuration.
 
@@ -172,9 +172,9 @@ Finally we will power off the system to make the VMWare template
 ```
 No we will return the the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
 
-### Satellite side...
+### Back on the Satellite side...
 
-First we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the cloud-init teamplate.  
+First we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the foloowing cloud-init teamplate.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
 
 ```
 # cat > ~/vmware-cloud-init-template.erb <<EOF
@@ -186,6 +186,12 @@ users: {}
 runcmd:
 - touch ~/cloud-init
 
+- |
+<%= indent(2) { snippet 'redhat_register' } -%>
+- |
+<%= indent(2) { snippet 'insights' } -%>
+- |
+
 phone_home:
   url: <%= foreman_url('built') %>
   post: []
@@ -193,37 +199,10 @@ tries: 10
 EOF
 ```
 
-No we will do the same to create the vmware-userdata-template
+For the user data we can use the UserData open-vm-tools template that is provided with Satellite.
 
-```
-cat > ~/vmware-userdata-template.erb <<EOF
-# Template for VMWare customization via open-vm-tools
-identity:
-  LinuxPrep:
-    domain: <%= @host.domain %>
-    hostName: <%= @host.shortname %>
-    hwClockUTC: true
-    timeZone: <%= @host.params['time-zone'] || 'UTC' %>
 
-globalIPSettings:
-  dnsSuffixList: [<%= @host.domain %>]
-  <%- @host.interfaces.each do |interface| -%>
-  <%- next unless interface.subnet -%>
-  dnsServerList: [<%= interface.subnet.dns_primary %>, <%= interface.subnet.dns_secondary %>]
-  <%- end -%>
 
-nicSettingMap:
-<%- @host.interfaces.each do |interface| -%>
-<%- next unless interface.subnet -%>
-  - adapter:
-      dnsDomain: <%= interface.domain %>
-      dnsServerList: [<%= interface.subnet.dns_primary %>, <%= interface.subnet.dns_secondary %>]
-      gateway: [<%= interface.subnet.gateway %>]
-      ip: <%= interface.ip %>
-      subnetMask: <%= interface.subnet.mask %>
-<%- end -%>
-EOF
-```
 
 From Hammer, let's get the ids for the operating system, architecture, and compute resources.
 ```
@@ -247,21 +226,19 @@ ID | NAME       | PROVIDER
 ---|------------|---------
 ```
 
-Now we will install our cloud-init and vmware-userdata-template templates
+Now we will create our cloud-init template on Satellite
 
 ```
 # hammer template create --name vmware-cloud-init --file ~/vmware-cloud-init-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type cloud-init
 Provisioning template created.
-# hammer template create --name vmware-userdata --file ~/vmware-userdata-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type user_data
-Provisioning template created.
 ```
-Creat image in Satellite link the vCenter template
+Creat an image in Satellite link the vCenter template
 ```
 # hammer compute-resource image create --operatingsystem-id 2 --architecture-id 1 --compute-resource-id 4 --user-data true --uuid template-rhel8-cloudinit --username root --name img-rhel8-prem-server
 Image created.
 ```
 
-I would also recommend checking to see if the VM we created for out template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
+I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
 
 ![Hosts -> All Hosts](/images/sat49.png/)
 
@@ -269,7 +246,7 @@ Click on Edit drop down button in the far right column for the localhost.localdo
 
 ![Delete button](/images/sat50.png)
 
-In the dialog box that says " Are you sure you want to delete host localhost.localdomain? This action is irreversible.", click the OK button.
+In the dialog box that says "Are you sure you want to delete host localhost.localdomain? This action is irreversible.", click the OK button.
 
 ## References  
 [Installing Satellite Server from a Connected Network](https://access.redhat.com/documentation/en-us/red_hat_satellite/6.9/html/installing_satellite_server_from_a_connected_network/index)   
