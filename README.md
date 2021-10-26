@@ -236,6 +236,10 @@ On the Provisioning Templates page, type 'userdata' in the search field and the 
 
 ![Filter on userdata and click UserData open-vm-tools link](/images/sat65.png)
 
+On the Provisioning Templates > Edit UserData open-vm-tools page click the Association tab.  Next click RedHat 8.3 in Applicable Operating Systems section All Items list and it will move over to the Selected Items list.  Click the blue Submit button.
+
+![Associate UserData open-vm-tools with RedHat 8.3](/images/sat66.png)
+
 Creat an image in Satellite link the vCenter template
 ```
 # hammer compute-resource image create --operatingsystem-id 2 --architecture-id 1 --compute-resource-id 4 --user-data true --uuid template-rhel8-cloudinit --username root --name img-rhel8-prem-server
