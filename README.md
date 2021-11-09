@@ -2,13 +2,10 @@
 
 [Tutorial Menu](https://github.com/pslucas0212/RedHat-Satellite-VM-Provisioning-to-vSphere-Tutorial)    
 
-In this section we will prepare the VMWare template...
-
-We will start our work on the VMWare side.
 
 ### Create VM Template on VMWare
 
-We will now create VM template on VMware.  We will create a RHEL 8.3 teamplate to have some practice later updating the RHEL VM. 
+We will now create VM template on VMware which we will use when provisioning RHEL VMs from Satellite.  We will create a RHEL 8.3 template for the exercise which setups for a future tutorial where we update our RHEL VM via Satellite. 
 
 First you will need to upload any RHEL ISO files to the VMware environment you will need for the RHEL VM we will be creating.  For RHEL 8.3 I uploaded the rhel-8.3-x86_64-dvd.iso file.
 
