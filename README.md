@@ -245,7 +245,7 @@ Now we will create our cloud-init template on Satellite
 # hammer template create --name vmware-cloud-init --file ~/vmware-cloud-init-template.erb --locations moline --organizations "Operations Department" --operatingsystem-ids 2 --type cloud-init
 Provisioning template created.
 ```
-For the user data we can use the UserData open-vm-tools template that is provided with Satellite.  We will need to associate the UserData open-vm-tools template with RHEL 8.3.  Chose Hosts -> Provisioning Templates from the left naviagtion bar.
+For the user data we can use the UserData open-vm-tools template that is provided with Satellite.  We will need to associate the UserData open-vm-tools template with RHEL 8.3.  Chose Hosts -> Provisioning Templates from the side menu.
 
 ![Hosts -> Provisioning Templates](/images/sat64.png)
 
