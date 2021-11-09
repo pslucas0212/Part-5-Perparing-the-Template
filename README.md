@@ -191,7 +191,7 @@ Architecture | x86_64
 
 ![Define Operating System](/images/sat85.png)
 
-First we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the foloowing cloud-init teamplate.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
+Next we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the foloowing cloud-init template.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
 
 ```
 # cat > ~/vmware-cloud-init-template.erb <<EOF
