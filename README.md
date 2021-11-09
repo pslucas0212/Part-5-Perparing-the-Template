@@ -175,7 +175,7 @@ First we will define RHEL 8.3 as an operating system choice.  Make sure you are 
 
 ![Host -> Operating Systems](/images/sat83.png)
 
-On the Operating Systems page click the blud Create Operating System button. 
+On the Operating Systems page click the blue Create Operating System button. 
 
 ![Blue Operating System button](/images/sat84.png)
 
