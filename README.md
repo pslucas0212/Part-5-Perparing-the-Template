@@ -177,7 +177,7 @@ First we will define RHEL 8.3 as an operating system choice.  Make sure you are 
 
 On the Operating Systems page click the blue Create Operating System button. 
 
-![Blue Operating System button](/images/sat84.png)
+![Blue Operating System button](/images/sat84a.png)
 
 On the Operating Systems > Create Operating Systems page fill in or chose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  
 
