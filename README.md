@@ -41,27 +41,27 @@ We will now need to temporarily subscribe to Satellite to access template packag
 # subscription-manager register --org=operations --activationkey=ak-ops-rhel8-prem-server 
 ```
 
-To support the creation of the VM teamplate, we willInstall the followeing the cloud-init, open-vm-tools and perl packages.
+To support the creation of the VM teamplate, we willInstall the following the cloud-init, open-vm-tools and perl packages.
 ```
 # yum -y install cloud-init open-vm-tools perl
 ```
 
-Enable the CA certificates for the image:
+Enable the CA certificates for the image.
 ```
 # update-ca-trust enable 
 ```
 
-Download the katello-server-ca.crt file from Satellite Server:
+Download the katello-server-ca.crt file from Satellite Server.
 ```
 # wget -O /etc/pki/ca-trust/source/anchors/cloud-init-ca.crt http://sat01.example.com/pub/katello-server-ca.crt
 ```
 
-To update the record of certificates, enter the following command:
+To update the record of certificates, enter the following command.
 ```
 # update-ca-trust extract
 ```
 
-Configure cloud-init to skip networking
+Configure cloud-init to skip networking.
 ```
 # cat << EOF > /etc/cloud/cloud.cfg.d/01_network.cfg
 network:
@@ -69,7 +69,7 @@ network:
 EOF
 ```  
 
-We setup cloud-init to call backk to Satellite
+We setup cloud-init to call backk to Satellite.
 ```
 # cat << EOF > /etc/cloud/cloud.cfg.d/10_foreman.cfg
 datasource_list: [NoCloud]
@@ -79,7 +79,7 @@ datasource:
 EOF
 ```
 
-Make up a backup of the default cloud-init and relace the default cloud-init
+Make up a backup of the default cloud-init and relace the default cloud-init.
 ```
 # cp /etc/cloud/cloud.cfg ~/cloud.cfg.`date -I`
 # cat << EOF > /etc/cloud/cloud.cfg
@@ -170,7 +170,7 @@ Finally we will power off the system to make the VMWare template
 ```
 # systemctl poweroff
 ```
-No we will return the the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
+Now we will return the the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
 
 ### Back on the Satellite side...
 
