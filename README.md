@@ -171,7 +171,7 @@ Now we will return the the vCenter console and convert the VM to a template.  Na
 
 ### Back on the Satellite side...
 
-First we will define RHEL 8.3 as an operating system choice.  On the side menu chose Hosts -> Operating Systems.
+First we will define RHEL 8.3 as an operating system choice.  Make sure you are in the Operations Department organization and the moline locations.  On the side menu chose Hosts -> Operating Systems.
 
 ![Host -> Operating Systems](/images/sat83.png)
 
