@@ -171,6 +171,28 @@ Now we will return the the vCenter console and convert the VM to a template.  Na
 
 ### Back on the Satellite side...
 
+First we will define RHEL 8.3... operating system. ???
+
+On the side ment chose Hosts -> Operating Systems.
+
+![Host -> Operating Systems](/images/sat83.png)
+
+On the Operating Systems page click the blud Create Operating System button. 
+
+![Blue Operating System button](/images/sat84.png)
+
+On the Operating Systems > Create Operating Systems page fill in or chose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  
+
+Name | Choice
+---- | ------
+Name* | RedHat
+Major Version* | 8
+Minor Version | 4
+Family | Red Hat
+Architecture | x86_64
+
+![Define Operating System](/images/sat85.png)
+
 First we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the foloowing cloud-init teamplate.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
 
 ```
