@@ -273,7 +273,7 @@ Now click on the RedHat 8.3 Link.
 
 ![RedHat 8.3](/images/sat93.png)
 
-On the Operating Systems > Editing RedHat 8.3 page, click on the Templates tab.  Chose following options from the dropdown list, and click the blue Submit button.
+On the Operating Systems > Editing RedHat 8.3 page, click on the Templates tab.  Chose following options from the approprate dropdown list.  When you are finiehsed click the blue Submit button.
 
 Option Name | Choice
 ----------- | ------
