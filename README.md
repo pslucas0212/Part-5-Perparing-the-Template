@@ -263,6 +263,27 @@ Creat an image in Satellite link the vCenter template
 Image created.
 ```
 
+Let's update the RHEL 8.3 Operating System to use the correct provisioning templates for our deployment.
+
+Make sure you are in the Operations Department organization and the moline locations.  On the side menu chose Hosts -> Operating Systems.
+
+![Host -> Operating Systems](/images/sat83.png)
+
+Now click on the RedHat 8.3 Link.
+
+![RedHat 8.3](/images/sat93.png)
+
+On the Operating Systems > Editing RedHat 8.3 page, click on the Templates tab.  Chose following options from the dropdown list, and click the blue Submit button.
+
+Option Name | Choice
+----------- | ------
+Cloud-init template | vmware-cloud-int
+User data template | UserData open-vm-tools
+
+![Template Optons](/images/sat94a.png)
+
+We are finished here.
+
 I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
 
 ![Hosts -> All Hosts](/images/sat49.png/)
