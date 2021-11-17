@@ -66,7 +66,7 @@ network:
 EOF
 ```  
 
-We setup cloud-init to call backk to Satellite.
+We setup cloud-init to call back to Satellite.
 ```
 # cat << EOF > /etc/cloud/cloud.cfg.d/10_foreman.cfg
 datasource_list: [NoCloud]
