@@ -263,7 +263,7 @@ Creat an image in Satellite link the vCenter template
 Image created.
 ```
 
-Let's update the RHEL 8.3 Operating System to use the correct provisioning templates for our deployment.
+Let's update the RHEL 8.3 Operating System to use the correct templates for our deployment.
 
 Make sure you are in the Operations Department organization and the moline locations.  On the side menu chose Hosts -> Operating Systems.
 
