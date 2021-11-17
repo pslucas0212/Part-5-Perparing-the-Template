@@ -179,19 +179,19 @@ On the Operating Systems page click the blue Create Operating System button.
 
 ![Blue Operating System button](/images/sat84a.png)
 
-On the Operating Systems > Create Operating Systems page fill in or chose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  
+On the Operating Systems > Create Operating Systems page fill in or chose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  We will revisit this page in a few minutes to update the template tab.  After filling in the information, click the blue Submit button.
 
 Name | Choice
 ---- | ------
 Name* | RedHat
 Major Version* | 8
-Minor Version | 4
+Minor Version | 3
 Family | Red Hat
 Architecture | x86_64
 
-![Define Operating System](/images/sat85.png)
+![Define Operating System](/images/sat85a.png)
 
-Next we will create a cloud-init template.  Login into Satellite and switch to roor user.  In the root user's home direct create the following cloud-init template.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
+Next we will create a cloud-init template.  Login into Satellite server's command line and switch to roor user.  In the root user's home direct create the following cloud-init template.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
 
 ```
 # cat > ~/vmware-cloud-init-template.erb <<EOF
