@@ -37,6 +37,15 @@ We will now need to temporarily subscribe to Satellite to access template packag
 # rpm -ivh http://sat01.example.com/pub/katello-ca-consumer-latest.noarch.rpm
 # subscription-manager register --org=operations --activationkey=ak-ops-rhel8-prem-server 
 ```
+This a good time to drop in public ssh keys if desired.
+```
+[root@localhost ~]# mkdir ~/.ssh
+[root@localhost ~]# chmod 700 ~/.ssh
+[root@localhost ~]# cat > ~/.ssh/authorized_keys <<EOF
+ssh-rsa AAAABlongkeyfingerprint will@example.com
+EOF
+[root@localhost ~]# chmod 600 ~/.ssh/authorized_keys
+```
 
 To support the creation of the VM teamplate, we willInstall the following the cloud-init, open-vm-tools and perl packages.
 ```
