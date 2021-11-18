@@ -42,8 +42,8 @@ This a good time to drop in public ssh keys if desired.
 [root@localhost ~]# mkdir ~/.ssh
 [root@localhost ~]# chmod 700 ~/.ssh
 [root@localhost ~]# cat > ~/.ssh/authorized_keys <<EOF
-ssh-rsa AAAABlongkeyfingerprint will@example.com
-EOF
+>ssh-rsa AAAABlongkeyfingerprint will@example.com
+>EOF
 [root@localhost ~]# chmod 600 ~/.ssh/authorized_keys
 ```
 
