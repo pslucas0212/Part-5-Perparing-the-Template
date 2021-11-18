@@ -85,9 +85,12 @@ datasource:
 EOF
 ```
 
-Make up a backup of the default cloud-init and relace the default cloud-init.
+Make up a backup of the default cloud-init file.
 ```
 # cp /etc/cloud/cloud.cfg ~/cloud.cfg.`date -I`
+```
+Replace the default cloud-init file.
+```
 # cat << EOF > /etc/cloud/cloud.cfg
 cloud_init_modules:
  - bootcmd
