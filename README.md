@@ -5,11 +5,11 @@
 
 ### Create VM Template on VMWare
 
-We will now create VM template on VMware which we will use when provisioning RHEL VMs from Satellite.  We will create a RHEL 8.3 template for the exercise which setups for a future tutorial where we update our RHEL VM via Satellite. 
+We will now create a VM template on VMware which we will use when provisioning RHEL VMs from Satellite.  We will create a RHEL 8.3 template for the exercise which prepares us for a future tutorial where we update our RHEL VM via Satellite. 
 
 First you will need to upload any RHEL ISO files to the VMware environment you will need for the RHEL VM we will be creating.  For RHEL 8.3 I uploaded the rhel-8.3-x86_64-dvd.iso file.
 
-Create and start the RHEL VM.  Chose 1 CPU with 2 GB of RAM and 20GB disk space.  You will use the web console to interact with the VM and configure it.  You will need to set the language, define the disk and set the root password.  Start the installation and reboot the system per the installation instruction.  After the system has rebooted, login as root and start a terminal session for the remainder of the configuration.
+Create and start the RHEL VM.  Choose 1 CPU with 2 GB of RAM and 20GB disk space.  You will use the web console to interact with the VM and configure it.  You will need to set the language, define the disk and set the root password.  Start the installation and reboot the system per the installation instruction.  After the system has rebooted, login as root and start a terminal session for the remainder of the configuration.
 
 Check to see if the the ethernet connection is active and if not active, run the connect command
 ```
@@ -37,17 +37,8 @@ We will now need to temporarily subscribe to Satellite to access template packag
 # rpm -ivh http://sat01.example.com/pub/katello-ca-consumer-latest.noarch.rpm
 # subscription-manager register --org=operations --activationkey=ak-ops-rhel8-prem-server 
 ```
-This a good time to drop in public ssh keys if desired.
-```
-[root@localhost ~]# mkdir ~/.ssh
-[root@localhost ~]# chmod 700 ~/.ssh
-[root@localhost ~]# cat > ~/.ssh/authorized_keys <<EOF
->ssh-rsa AAAABlongkeyfingerprint will@example.com
->EOF
-[root@localhost ~]# chmod 600 ~/.ssh/authorized_keys
-```
 
-To support the creation of the VM teamplate, we willInstall the following the cloud-init, open-vm-tools and perl packages.
+To support the creation of the VM template, we will install the following the cloud-init, open-vm-tools and perl packages.
 ```
 # yum -y install cloud-init open-vm-tools perl
 ```
@@ -75,7 +66,7 @@ network:
 EOF
 ```  
 
-We setup cloud-init to call back to Satellite.
+We setup the cloud-init to make a call back to Satellite.
 ```
 # cat << EOF > /etc/cloud/cloud.cfg.d/10_foreman.cfg
 datasource_list: [NoCloud]
@@ -124,7 +115,7 @@ System has been unregistered.
 # subscription-manager clean
 All local data removed
 ```
-We will creat a clean up script.
+We will create a clean up script.
 ```
 # cat > ~/clean.sh <<EOF
 #!/bin/bash
@@ -179,11 +170,11 @@ Finally we will power off the system to make the VMWare template
 ```
 # systemctl poweroff
 ```
-Now we will return the the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
+Now we will return to the vCenter console and convert the VM to a template.  Name the template ‘template-rhel8-cloudinit’
 
 ### Back on the Satellite side...
 
-First we will define RHEL 8.3 as an operating system choice.  Make sure you are in the Operations Department organization and the moline locations.  On the side menu chose Hosts -> Operating Systems.
+First we will define RHEL 8.3 as an operating system choice.  Make sure you are in the Operations Department organization and the moline locations.  On the side menu choose Hosts -> Operating Systems.
 
 ![Host -> Operating Systems](/images/sat83.png)
 
@@ -191,7 +182,7 @@ On the Operating Systems page click the blue Create Operating System button.
 
 ![Blue Operating System button](/images/sat84a.png)
 
-On the Operating Systems > Create Operating Systems page fill in or chose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  We will revisit this page in a few minutes to update the template tab.  After filling in the information, click the blue Submit button.
+On the Operating Systems > Create Operating Systems page fill in or choose options from the following table, and click the blue Submit button.  We will only be filling in information on the Operating System tab and accept the default settings for any other tabs on this page.  We will revisit this page in a few minutes to update the template tab.  After filling in the information, click the blue Submit button.
 
 Name | Choice
 ---- | ------
@@ -203,7 +194,7 @@ Architecture | x86_64
 
 ![Define Operating System](/images/sat85a.png)
 
-Next we will create a cloud-init template.  Login into Satellite server's command line and switch to roor user.  In the root user's home direct create the following cloud-init template.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
+Next we will create a cloud-init template.  Login into Satellite server's command line and switch to root user.  In the root user's home direct create the following cloud-init template.  Note: The cloud-init template we are creating will also register your RHEL VM to Satellite and Insights.
 
 ```
 # cat > ~/vmware-cloud-init-template.erb <<EOF
@@ -265,7 +256,7 @@ On the Provisioning Templates page, type 'userdata' in the search field and the 
 
 ![Filter on userdata and click UserData open-vm-tools link](/images/sat65.png)
 
-On the Provisioning Templates > Edit UserData open-vm-tools page click the Association tab.  Next click RedHat 8.3 in Applicable Operating Systems section All Items list and it will move over to the Selected Items list.  Click the blue Submit button.
+On the Provisioning Templates > Edit UserData open-vm-tools page click the Association tab.  Next click RedHat 8.3 in the Applicable Operating Systems section All Items list and it will move over to the Selected Items list.  Click the blue Submit button.
 
 ![Associate UserData open-vm-tools with RedHat 8.3](/images/sat66.png)
 
@@ -277,7 +268,7 @@ Image created.
 
 Let's update the RHEL 8.3 Operating System to use the correct templates for our deployment.
 
-Make sure you are in the Operations Department organization and the moline locations.  On the side menu chose Hosts -> Operating Systems.
+Make sure you are in the Operations Department organization and the moline locations.  On the side menu choose Hosts -> Operating Systems.
 
 ![Host -> Operating Systems](/images/sat83.png)
 
@@ -285,7 +276,7 @@ Now click on the RedHat 8.3 Link.
 
 ![RedHat 8.3](/images/sat93.png)
 
-On the Operating Systems > Editing RedHat 8.3 page, click on the Templates tab.  Chose following options from the approprate dropdown list.  When you are finiehsed click the blue Submit button.
+On the Operating Systems > Editing RedHat 8.3 page, click on the Templates tab.  Chose following options from the appropriate dropdown list.  When you are finished click the blue Submit button.
 
 Option Name | Choice
 ----------- | ------
@@ -296,11 +287,11 @@ User data template | UserData open-vm-tools
 
 We are finished here.
 
-I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar chose Hosts -> All Hosts.
+I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar choose Hosts -> All Hosts.
 
 ![Hosts -> All Hosts](/images/sat49.png/)
 
-Click on Edit drop down button in the far right column for the localhost.localdomain host, and chose Delete.  
+Click on the Edit drop down button in the far right column for the localhost.localdomain host, and choose Delete.  
 
 ![Delete button](/images/sat50.png)
 
