@@ -287,7 +287,7 @@ User data template | UserData open-vm-tools
 
 We are finished here.
 
-I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the left navigation bar choose Hosts -> All Hosts.
+I would also recommend checking to see if the VM we created for our template on vSphere has been removed from Satellite.  If not, we will want to delete it.  First make sure you have set organization to Any Organization and location to Any Location.  From the side menu choose Hosts -> All Hosts.
 
 ![Hosts -> All Hosts](/images/sat49.png/)
 
